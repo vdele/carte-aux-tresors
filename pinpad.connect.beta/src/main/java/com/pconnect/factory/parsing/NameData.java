@@ -3,14 +3,14 @@
  */
 package com.pconnect.factory.parsing;
 
-import java.util.Vector;
+import java.util.List;
 
 
 
 /**
  * @author 20002845
  * @date 28 mai 2015
- * 
+ *
  */
 public class NameData extends DataReader
 {
@@ -23,7 +23,7 @@ public class NameData extends DataReader
     }
 
     @Override
-    public Vector<String> getDatasInFile() {
+    public List<String> getDatasInFile() {
         // TODO Auto-generated method stub
         return super.getDatasInFile();
     }

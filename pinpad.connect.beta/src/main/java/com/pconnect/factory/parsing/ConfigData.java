@@ -4,13 +4,13 @@
 package com.pconnect.factory.parsing;
 
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
 
 /**
  * @author 20002845
  * @date 31 août 2015
- * 
+ *
  */
 public class ConfigData extends DataReader
 {
@@ -21,7 +21,7 @@ public class ConfigData extends DataReader
     public ConfigData() throws Exception {
         super();
 
-        final Vector<String> datas =  super.getDatasInFile();
+        final List<String> datas = super.getDatasInFile();
         for(int i = 0 ; i < datas.size();i++){
             final String line = datas.get(i);
             if(line!=null && !line.startsWith("#")){
@@ -32,21 +32,21 @@ public class ConfigData extends DataReader
                     }
                     params.put(param[0], param[1]);
 
-                    log.logTrace("Adding value in config data -> @-@", param[0], param[1]); 
+                    log.logTrace("Adding value in config data -> @-@", param[0], param[1]);
                 }
             }
         }
-    }
-
-    public String getConfigValue(final String key){
-        return params.get(key);
     }
 
     public Hashtable<String, String> getAllParams(){
         return params;
     }
 
-    public Vector<String> getMenuPauseInformation(){
+    public String getConfigValue(final String key){
+        return params.get(key);
+    }
+
+    public List<String> getMenuPauseInformation() {
         return getDatasInFile("menu");
     }
 

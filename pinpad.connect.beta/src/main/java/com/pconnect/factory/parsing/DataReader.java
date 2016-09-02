@@ -7,7 +7,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.pconnect.factory.running.Logger;
 import com.pconnect.factory.util.ParsingFactory;
@@ -16,17 +17,17 @@ import com.pconnect.factory.util.ParsingFactory;
 /**
  * @author 20002845
  * @date 28 janv. 2015
- * 
+ *
  */
 public abstract class DataReader
 {
 
-    Logger log = new Logger(getClass());
-
-
     //public static final String pathFiles = "src/main/resources/";
     public static final String PATH_FILES = "data/";
+
+
     public static final String EXTENSION = ".data";
+    Logger log = new Logger(getClass());
     private final String fileName;
 
 
@@ -35,30 +36,47 @@ public abstract class DataReader
         this.fileName = fileName;
         log.logTrace("Name of parsing file : @" , fileName);
         final File f = new File(getFilePath());
-        if( !(this instanceof DataWriter) && !f.exists()) { 
+        if( !(this instanceof DataWriter) && !f.exists()) {
             throw new Exception("File to parse " + getFilePath() +" doesn't exist");
         }
     }
 
+    protected List<String> constructWithTag(final String tag){
+        final List<String> datas =  getDatasInFile();
+        boolean parsingMap = false;
+        List<String> dataWithTag = null;
+        if(datas!=null && datas.size()>0){
+            dataWithTag = new ArrayList<String>();
+            for(int i = 0; i < datas.size();i++){
+
+                final String line = datas.get(i);
+                if(!line.startsWith("#")) {
+                    if(line.equals("["+tag+"]")) {
+                        parsingMap = true;
+                    }
+                    else if(line.equals("[/"+tag+"]")) {
+                        parsingMap = false;
+                    } else
+                        if(parsingMap){
+                            dataWithTag.add(line);
+                        }
+                }
+            }
+        }
+
+        return dataWithTag;
+    }
+
     /**
-     * @param name
-     * @return
-     * @throws Exception 
+     *
+     * @return List containing Strings which represents each line
      */
-    private String getNameOfGeneratedFile(final String name) throws Exception {        
-        return ParsingFactory.convertClassToDataFileName(name);
+    protected List<String> getDatasInFile(){
+        return getDatasInFile("");
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public String getFilePath(){
-        return DataReader.PATH_FILES+fileName;
-    }
-
-    protected Vector<String> getDatasInFile(final String prefix){
-        Vector<String> lines = null;
+    protected List<String> getDatasInFile(final String prefix){
+        List<String> lines = null;
 
         //Create object of FileReader
         FileReader inputFile;
@@ -74,7 +92,7 @@ public abstract class DataReader
             while ((line = bufferReader.readLine()) != null)   {
                 if(!"".equals(line.trim())) {
                     if(lines== null) {
-                        lines = new Vector<String>();
+                        lines = new ArrayList<String>();
                     }
                     if(line.startsWith(prefix)) {
                         lines.add(line);
@@ -90,39 +108,22 @@ public abstract class DataReader
         return lines;
     }
 
-    /**
-     * 
-     * @return Vector containing Strings which represents each line 
-     */
-    protected Vector<String> getDatasInFile(){       
-        return getDatasInFile("");
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getFilePath(){
+        return DataReader.PATH_FILES+fileName;
     }
 
 
-    protected Vector<String> constructWithTag(final String tag){
-        final Vector<String> datas =  getDatasInFile();
-        boolean parsingMap = false;
-        Vector<String> dataWithTag = null;
-        if(datas!=null && datas.size()>0){
-            dataWithTag = new Vector<String>();
-            for(int i = 0; i < datas.size();i++){
-
-                final String line = datas.get(i);
-                if(!line.startsWith("#")) {
-                    if(line.equals("["+tag+"]")) {
-                        parsingMap = true;
-                    }
-                    else if(line.equals("[/"+tag+"]")) {
-                        parsingMap = false;
-                    } else 
-                        if(parsingMap){
-                            dataWithTag.add(line);
-                        }
-                }     
-            }   
-        }   
-
-        return dataWithTag;
+    /**
+     * @param name
+     * @return
+     * @throws Exception
+     */
+    private String getNameOfGeneratedFile(final String name) throws Exception {
+        return ParsingFactory.convertClassToDataFileName(name);
     }
 }
 
