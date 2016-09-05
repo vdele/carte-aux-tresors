@@ -9,20 +9,10 @@ import com.pconnect.entity.event.Person;
 /**
  * @author 20002845
  * @date 6 oct. 2015
- * 
+ *
  */
-public interface IPerson extends IEvent
+public interface IPerson extends IMobileEvent
 {
-
-    /**
-     * 
-     */
-    public abstract void down();
-
-
-    public IEvent getFacedEvent();
-
-
     public abstract Integer getLifePercent();
 
     public abstract String getName();
@@ -43,7 +33,7 @@ public interface IPerson extends IEvent
     public abstract void hits(Person adversaire);
 
     /**
-     * 
+     *
      */
     public abstract void incrementVictoriaNumber();
 
@@ -51,24 +41,11 @@ public interface IPerson extends IEvent
 
     public abstract boolean isDead();
 
-    public abstract boolean isInTheWall(int xPix, int yPix);
-
     public boolean isMainChar();
-
-    public abstract void left();
-
-
-    public abstract void right();
-
 
     public abstract void setLifePercent(Integer lifePercent);
     public void setMainChar(final boolean mainChar);
 
     public abstract String toString();
-
-    /**
-     * 
-     */
-    public abstract void up();
 
 }

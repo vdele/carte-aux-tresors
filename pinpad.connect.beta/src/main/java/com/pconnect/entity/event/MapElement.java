@@ -1,6 +1,5 @@
 package com.pconnect.entity.event;
 
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import com.pconnect.entity.event.itf.IMapElement;
@@ -14,26 +13,14 @@ public class MapElement implements IMapElement {
 
     Logger log = new Logger(this.getClass());
 
-    private int HEIGHT = 32;
-    private int WIDTH = 32;
+    private int height = 32;
+    private int width = 32;
     private int X = 60;
     private int Y = 110;
+    private int IMG_REPRESENTATION = 1;
 
     public BufferedImage[] TILE_CHAR = null;
 
-    /**
-     * Tile position <br/>
-     * down 0-1-2 <br/>
-     * left 3-4-5 <br/>
-     * right 6-7-8<br/>
-     * up 9-10-11
-     *
-     */
-    int IND_REPR_VARIATION = 0;
-
-    final int[] REPR_VARIATION = { 0, 1, 0, -1 };
-
-    int IMG_REPRESENTATION = 1;
 
     protected Board board = null;
 
@@ -41,18 +28,11 @@ public class MapElement implements IMapElement {
         board = (Board) InstanceManager.getInstance(IInstanceManager.BOARD);
     }
 
-
-    public Integer getDirection(){
-        return IMG_REPRESENTATION;
-    }
-
     public final int getHeight() {
-        return HEIGHT;
+        return height;
     }
 
-    /* (non-Javadoc)
-     * @see entity.person.IPerson#getImgRepresentation()
-     */
+
     public Integer getImgRepresentation(){
         return IMG_REPRESENTATION;
     }
@@ -62,13 +42,12 @@ public class MapElement implements IMapElement {
     }
 
     public BufferedImage getTileRepresentation(){
-        log.logTrace("Tile_Char[@]", IMG_REPRESENTATION+IND_REPR_VARIATION);
-        return TILE_CHAR[IMG_REPRESENTATION+REPR_VARIATION[IND_REPR_VARIATION]];
+        log.logTrace("Tile_Char[@]", IMG_REPRESENTATION);
+        return TILE_CHAR[IMG_REPRESENTATION];
     }
 
-
     public final int getWidth() {
-        return WIDTH;
+        return width;
     }
 
 
@@ -76,11 +55,12 @@ public class MapElement implements IMapElement {
      * @see entity.person.IEvent#maxX()
      */
     public final int maxX() {
-        return X + WIDTH;
+        return X + width;
     }
 
+
     public final int maxY() {
-        return Y + HEIGHT;
+        return Y + height;
     }
 
     /* (non-Javadoc)
@@ -98,35 +78,12 @@ public class MapElement implements IMapElement {
     }
 
 
-    /* (non-Javadoc)
-     * @see entity.person.IPerson#modifyIndRepresentationVariation()
-     */
-    public void modifyIndRepresentationVariation() {
-        if(IND_REPR_VARIATION == REPR_VARIATION.length-1) {
-            IND_REPR_VARIATION=0;
-        } else {
-            IND_REPR_VARIATION++;
-        }
-    }
-
-    public void setDirection(final int keyCode) {
-        log.logTrace("Key : @", keyCode);
-        if(keyCode == new Integer(KeyEvent.VK_DOWN)){
-            IMG_REPRESENTATION = Person.DIRECTION_SOUTH;
-        }
-        if(keyCode == new Integer(KeyEvent.VK_LEFT)){
-            IMG_REPRESENTATION = Person.DIRECTION_WEST;
-        }
-        if(keyCode == new Integer(KeyEvent.VK_RIGHT)){
-            IMG_REPRESENTATION = Person.DIRECTION_EAST;
-        }
-        if(keyCode==new Integer(KeyEvent.VK_UP)){
-            IMG_REPRESENTATION = Person.DIRECTION_NORTH;
-        }
-    }
-
     public final void setHeight(final int height) {
-        HEIGHT = height;
+        this.height = height;
+    }
+
+    public void setImgRepresentation(final Integer imgRepresentation){
+        IMG_REPRESENTATION = imgRepresentation;
     }
 
     public final void setTileChar(final BufferedImage[] tILE_CHAR) {
@@ -134,7 +91,7 @@ public class MapElement implements IMapElement {
     }
 
     public final void setWidth(final int width) {
-        WIDTH = width;
+        this.width = width;
     }
 
     /*

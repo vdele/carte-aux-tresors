@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 public interface IMapElement {
 
-    public abstract Integer getDirection();
 
     public int getHeight();
 
@@ -12,7 +11,9 @@ public interface IMapElement {
 
     public BufferedImage[] getTileChar() ;
 
+
     public BufferedImage getTileRepresentation();
+
 
     public int getWidth();
 
@@ -23,16 +24,6 @@ public interface IMapElement {
     public int minX();
 
     public int minY();
-
-    /**
-     *
-     */
-    public abstract void modifyIndRepresentationVariation();
-
-    /**
-     * @param keyCode
-     */
-    public abstract void setDirection(int keyCode);
 
     public void setHeight(final int height);
 

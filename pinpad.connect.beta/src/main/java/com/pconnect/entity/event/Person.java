@@ -3,11 +3,7 @@
  */
 package com.pconnect.entity.event;
 
-import java.util.List;
-
-import com.pconnect.entity.event.itf.IEvent;
 import com.pconnect.entity.event.itf.IPerson;
-import com.pconnect.factory.gui.Coord;
 import com.pconnect.factory.util.FactoryUtils;
 
 
@@ -19,15 +15,8 @@ import com.pconnect.factory.util.FactoryUtils;
  * @date 11 juin 2015
  *
  */
-public class Person extends Event implements IPerson
+public class Person extends MobileEvent implements IPerson
 {
-    public static final int DIRECTION_SOUTH = 1;
-    public static final int DIRECTION_WEST = 4;
-    public static final int DIRECTION_EAST = 7;
-
-    public static final int DIRECTION_NORTH = 10;
-
-    public int PAS = 6;
 
     private final String name;
     private final String surname;
@@ -52,17 +41,6 @@ public class Person extends Event implements IPerson
     }
 
 
-    /* (non-Javadoc)
-     * @see entity.person.IPerson#down()
-     */
-    public void down() {
-        int movement = PAS;
-        while (isInTheWall(minX(), minY() + movement) && movement > 0) {
-            movement--;
-        }
-        setY( minY() + movement);
-    }
-
     /**
      * @return
      */
@@ -77,6 +55,7 @@ public class Person extends Event implements IPerson
         return false;
     }
 
+
     /**
      *
      * @return
@@ -85,77 +64,6 @@ public class Person extends Event implements IPerson
         return FactoryUtils.target(10, 5);
     }
 
-
-    /**
-     * @param facedCoord
-     * @return
-     */
-    private IEvent getEvent(final Coord facedCoord) {
-        return getEvent(facedCoord.getX(), facedCoord.getY());
-    }
-
-    /**
-     * @param xPix
-     * @param yPix
-     * @return
-     */
-    private IEvent getEvent(final int xPix, final int yPix) {
-        final List<IEvent> listEvt = board.getEvents();
-        if(listEvt!=null) {
-            for (final IEvent evt:listEvt) {
-                if(evt!=null
-                        && (!(evt instanceof IPerson)
-                                || evt instanceof IPerson && !((IPerson)evt).isMainChar())){
-                    if (evt.minX() < xPix + getWidth()
-                    && evt.maxY()>yPix
-                    && evt.minY() < yPix + getHeight()
-                    && evt.maxX()>xPix) {
-                        return evt;
-                    }
-                }
-
-            }
-        }
-        return null;
-    }
-
-    public Coord getFacedCoord(){
-        int xPix,yPix;
-        //isInTheWall(X - movement ,Y)
-        switch(getDirection()){
-            case DIRECTION_NORTH:
-                xPix = minX();
-                yPix = minY() - PAS;
-                break;
-            case DIRECTION_SOUTH:
-                xPix = minX();
-                yPix = minY() + PAS;
-                break;
-            case DIRECTION_WEST:
-                xPix = minX() - PAS;
-                yPix = minY();
-                break;
-            case DIRECTION_EAST:
-                xPix = minX() + PAS;
-                yPix = minY();
-                break;
-            default:
-                xPix = -1;
-                yPix = -1;
-                break;
-
-        }
-        final Coord c = new Coord(xPix,yPix);
-
-        return c;
-    }
-
-    /* (non-Javadoc)
-     * @see com.pconnect.entity.event.itf.IPerson#getFacedEvent()
-     */
-    public IEvent getFacedEvent() {
-        return getEvent(getFacedCoord());
-    }
 
 
     /* (non-Javadoc)
@@ -216,15 +124,6 @@ public class Person extends Event implements IPerson
 
     }
 
-    /*
-     * Tile position
-     * down     0-1-2
-     * left     3-4-5
-     * right    6-7-8
-     * up       9-10-11
-     *
-     */
-
     /* (non-Javadoc)
      * @see entity.person.IPerson#isAlive()
      */
@@ -244,41 +143,10 @@ public class Person extends Event implements IPerson
     }
 
 
-    /* (non-Javadoc)
-     * @see entity.person.IPerson#isInTheWall(int, int)
-     */
-    public boolean isInTheWall(final int xPix, final int yPix){
-        if (yPix + getHeight() >= board.getMapLengthInPixels()) {
-            return true;
-        } else if (xPix + getWidth() >= board.getMapWidthInPixels()) {
-            return true;
-        }
-        else if (xPix < 0) {
-            return true;
-        } else if (yPix < 0) {
-            return true;
-        } else {
-            if(getEvent(xPix, yPix)!=null) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
+
 
     public boolean isMainChar() {
         return mainChar;
-    }
-
-    /* (non-Javadoc)
-     * @see entity.person.IPerson#left()
-     */
-    public void left() {
-        int movement = PAS;
-        while (isInTheWall(minX() - movement, minY()) && movement > 0) {
-            movement--;
-        }
-        setX(minX() - movement);
     }
 
     /**
@@ -287,18 +155,6 @@ public class Person extends Event implements IPerson
     private void loseLife(final int hittingValue) {
         lifePercent = lifePercent - hittingValue;
 
-    }
-
-
-    /* (non-Javadoc)
-     * @see entity.person.IPerson#right()
-     */
-    public void right(){
-        int movement = PAS;
-        while (isInTheWall(minX() + movement, minY()) && movement > 0) {
-            movement--;
-        }
-        setX(minX() + movement);
     }
 
 
@@ -319,17 +175,6 @@ public class Person extends Event implements IPerson
     @Override
     public String toString(){
         return getSurname() + " " + getName();
-    }
-
-    /* (non-Javadoc)
-     * @see entity.person.IPerson#up()
-     */
-    public void up() {
-        int movement = PAS;
-        while(isInTheWall(minX() ,minY()-movement ) && movement>0){
-            movement--;
-        }
-        setY( minY() - movement);
     }
 }
 
