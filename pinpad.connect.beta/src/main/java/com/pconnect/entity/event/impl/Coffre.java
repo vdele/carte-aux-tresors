@@ -9,7 +9,7 @@ import com.pconnect.entity.event.Event;
 /**
  * @author 20002845
  * @date Nov 16, 2015
- * 
+ *
  */
 public class Coffre extends Event
 {
@@ -19,6 +19,7 @@ public class Coffre extends Event
      */
     @Override
     public void activeEvent() {
+        super.activeEvent();
         board.showMsgBox("Hello I'm a coffre");
     }
 

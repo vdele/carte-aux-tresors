@@ -76,7 +76,7 @@ public class ThePanel extends JPanel implements ActionListener
      */
     private void drawBackground(final Graphics g, final DisplayingDimension dim) {
         setBounds(dim.boundX, dim.boundY,dim.width,dim.height);
-        if(board.DISPLAY_BACKGROUND && board.MAP != null) {
+        if (board.isBackgroundDisplayed() && board.MAP != null) {
             for(int col = 0; col < board.MAP.length; col++) {
                 for(int lig = 0; lig < board.MAP[col].length;lig++){
                     g.drawImage(board.IMG_CASE[board.MAP[col][lig]], lig*board.CASE_SIZE, col*board.CASE_SIZE, board.CASE_SIZE, board.CASE_SIZE,null);

@@ -4,8 +4,6 @@
 
 package com.pconnect.entity.event.itf;
 
-import java.awt.image.BufferedImage;
-
 import com.pconnect.entity.event.Person;
 
 /**
@@ -16,17 +14,18 @@ import com.pconnect.entity.event.Person;
 public interface IPerson extends IEvent
 {
 
+    /**
+     * 
+     */
+    public abstract void down();
+
+
+    public IEvent getFacedEvent();
+
+
     public abstract Integer getLifePercent();
 
-    public abstract void setLifePercent(Integer lifePercent);
-
     public abstract String getName();
-
-    public abstract String getSurname();
-
-    public abstract boolean isDead();
-
-    public abstract boolean isAlive();
 
     /**
      * Rapidity is calculated for one hit between 1 and 10
@@ -34,61 +33,42 @@ public interface IPerson extends IEvent
      */
     public abstract Integer getRapidity();
 
+    public abstract String getSurname();
+
+    public abstract Integer getVictoriaNumber();
+
     /**
      * @param adversaire
      */
     public abstract void hits(Person adversaire);
-
-    public abstract String toString();
 
     /**
      * 
      */
     public abstract void incrementVictoriaNumber();
 
-    public abstract Integer getVictoriaNumber();
+    public abstract boolean isAlive();
 
-    public abstract Integer getImgRepresentation();
+    public abstract boolean isDead();
 
-    public abstract Integer getDirection();
+    public abstract boolean isInTheWall(int xPix, int yPix);
+
+    public boolean isMainChar();
+
+    public abstract void left();
+
+
+    public abstract void right();
+
+
+    public abstract void setLifePercent(Integer lifePercent);
+    public void setMainChar(final boolean mainChar);
+
+    public abstract String toString();
 
     /**
      * 
      */
     public abstract void up();
-
-    /**
-     * 
-     */
-    public abstract void down();
-
-    public abstract void left();
-
-    /**
-     * 
-     */
-    public abstract void modifyIndRepresentationVariation();
-
-    public abstract void right();
-
-    public abstract boolean isInTheWall(int xPix, int yPix);
-
-    /**
-     * @param keyCode
-     */
-    public abstract void setDirection(int keyCode);
-
-    public abstract BufferedImage getTileRepresentation();
-    public boolean isMainChar();
-    public void setMainChar(final boolean mainChar);
-
-    /**
-     * Please use IEvent getFacedEvent() method 
-     * @return
-     */
-    @Deprecated
-    public boolean isFacedToEvent();
-
-    public IEvent getFacedEvent();
 
 }

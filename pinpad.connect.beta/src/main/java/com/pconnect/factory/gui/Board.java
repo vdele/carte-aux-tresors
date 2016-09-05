@@ -21,45 +21,17 @@ import com.pconnect.factory.running.itf.IMenu;
 public class Board
 {
 
-    public static class Coord{
-        private final int X;
-        private final int Y;
-        public Coord(final int x, final int y){
-            X = x;
-            Y = y;
-        }
-
-        public int getX() {
-            return X;
-        }
-
-
-        public int getY() {
-            return Y;
-        }
-
-
-        @Override
-        public String toString(){
-            return X+"."+Y;
-        }
-
-
-    }
-
     Logger log = new Logger(getClass());
-    public boolean DISPLAY_BACKGROUND = false;
-    private boolean DISPLAY_CHAR = false;
-    public boolean DISPLAY_ITEMS = false;
-    private boolean IN_PAUSE = false;
-    private boolean MSG_DISPLAYED = false;
-    private String MSG_TEXT = null;
-    public int PAS = 6;
+    private boolean displayBackground = false;
+    private boolean displayCharacter = false;
+    private boolean inPause = false;
+    private boolean displayMessage = false;
+    private String messageText = null;
 
     public int CASE_SIZE = 32;
-    public  int SCREEN_WIDTH = 400;
+    public int SCREEN_WIDTH = 400;
 
-    public  int SCREEN_HEIGHT = 300;
+    public int SCREEN_HEIGHT = 300;
 
 
     public IMenu MENU_PAUSE= null;
@@ -77,17 +49,11 @@ public class Board
 
     private int indMainChar=-1;
 
-
-
-    public Board(){
-    }
-
-
     /**
      *
      */
-    public  void activeBackground() {
-        DISPLAY_BACKGROUND = !DISPLAY_BACKGROUND;
+    public void activeBackground() {
+        displayBackground = !displayBackground;
     }
 
     public  void addEvent(final IEvent evt){
@@ -98,22 +64,20 @@ public class Board
     }
 
     public boolean areCharactersDisplayed() {
-        return DISPLAY_CHAR;
+        return displayCharacter;
     }
 
     public  void disableMsgBox(){
-        MSG_DISPLAYED = false;
-        MSG_TEXT = null;
+        displayMessage = false;
+        messageText = null;
     }
+
     /**
      *
      */
-    public  void displayCharacter() {
-        DISPLAY_CHAR = !DISPLAY_CHAR;
+    public void displayCharacter() {
+        displayCharacter = !displayCharacter;
     }
-
-
-
     /**
      *
      */
@@ -124,17 +88,18 @@ public class Board
         }
     }
 
+
+
     public  boolean gameInPause(){
-        return IN_PAUSE;
+        return inPause;
     }
+
     public  boolean gameIsStopped(){
         return gameInPause() || messageIsDisplayed();
     }
     public List<IEvent> getEvents(){
         return ALL_EVENTS;
     }
-
-
     /**
      * RORO
      * @return
@@ -159,6 +124,7 @@ public class Board
 
     }
 
+
     public  int getMapLengthInPixels(){
         return MAP.length*CASE_SIZE;
     }
@@ -167,15 +133,19 @@ public class Board
         return MAP[0].length*CASE_SIZE;
     }
 
-
     public  String getMsgBoxText(){
-        return MSG_TEXT;
+        return messageText;
+    }
+
+
+    public boolean isBackgroundDisplayed(){
+        return displayBackground;
     }
 
 
 
     public  boolean messageIsDisplayed(){
-        return MSG_DISPLAYED;
+        return displayMessage;
     }
 
     /**
@@ -183,9 +153,9 @@ public class Board
      */
     public  void pause() {
         if(!messageIsDisplayed()){
-            IN_PAUSE = !IN_PAUSE;
-            log.logInfo(IN_PAUSE?"Starts pause":"Ends pause");
-            if(IN_PAUSE) {
+            inPause = !inPause;
+            log.logInfo(inPause ? "Starts pause" : "Ends pause");
+            if (inPause) {
                 MENU_PAUSE.selectNext();
             }
         }
@@ -197,8 +167,8 @@ public class Board
     public  void showMsgBox(final String text) {
         if(!gameInPause()){
             log.logInfo("Displaying message : @", text);
-            MSG_DISPLAYED = true;
-            MSG_TEXT = text;
+            displayMessage = true;
+            messageText = text;
         }
     }
 
