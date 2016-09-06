@@ -40,7 +40,7 @@ public abstract class MobileEvent extends Event implements IMobileEvent {
     }
 
     /**
-     * this class can be extracted
+     * TODO this class can be extracted
      *
      * @param horizontalMovement
      * @param increaseMov
@@ -59,7 +59,7 @@ public abstract class MobileEvent extends Event implements IMobileEvent {
     }
 
     /**
-     * Can be extracted in another class
+     * TODO Can be extracted in another class
      *
      * @param increase
      * @param horizontalMovement

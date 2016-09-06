@@ -33,6 +33,10 @@ import com.pconnect.factory.util.Invoker;
 public class AppLoader
 {
     private static Logger log = new Logger(AppLoader.class);
+
+    /**
+     * TODO define instance in file and read it to create instance
+     */
     private static void loadSupport(){
         InstanceManager.addInstance(IInstanceManager.CONFIG, "com.pconnect.factory.running.Config");
 
