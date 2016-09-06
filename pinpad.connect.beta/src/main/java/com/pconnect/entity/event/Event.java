@@ -23,9 +23,11 @@ public abstract class Event extends MapElement implements IEvent {
 
     /* (non-Javadoc)
      * @see com.pconnect.entity.event.itf.IEvent#activeEvent()
+     * TODO this method must be abstract in event, and a main method must be used to call consumeEvent, then activeEvent
      */
-    public void activeEvent(){
+    public final void activeEvent() {
         consumeEvent();
+        runEvent();
     }
 
     private void consumeEvent() {
@@ -35,6 +37,8 @@ public abstract class Event extends MapElement implements IEvent {
     public final boolean hasBeenConsumed(){
         return hasBeenConsumed;
     }
+
+    public abstract void runEvent();
 
 }
 

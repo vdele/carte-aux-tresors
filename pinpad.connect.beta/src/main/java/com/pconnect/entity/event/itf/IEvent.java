@@ -16,5 +16,7 @@ public abstract interface IEvent extends IMapElement
 
     public abstract boolean hasBeenConsumed();
 
+    public void runEvent();
+
 
 }

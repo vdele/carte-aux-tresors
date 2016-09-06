@@ -9,7 +9,6 @@ import com.pconnect.factory.util.FactoryUtils;
 
 /**
  *
- * TODO can divide this class, separate moving operation in MobileEvent class
  *
  * @author 20002845
  * @date 11 juin 2015
@@ -157,6 +156,11 @@ public class Person extends MobileEvent implements IPerson
 
     }
 
+
+    @Override
+    public void runEvent(){
+        log.logInfo("Nothing to do here");
+    }
 
     /* (non-Javadoc)
      * @see entity.person.IPerson#setLifePercent(java.lang.Integer)

@@ -10,7 +10,7 @@ import com.pconnect.entity.event.itf.IMobileEvent;
 import com.pconnect.entity.event.itf.IPerson;
 import com.pconnect.factory.gui.Coord;
 
-public class MobileEvent extends Event implements IMobileEvent {
+public abstract class MobileEvent extends Event implements IMobileEvent {
 
     private final int[] REPR_VARIATION = { 0, 1, 0, -1 };
 
@@ -39,6 +39,13 @@ public class MobileEvent extends Event implements IMobileEvent {
         }
     }
 
+    /**
+     * this class can be extracted
+     *
+     * @param horizontalMovement
+     * @param increaseMov
+     * @param movement
+     */
     private void defineNewCoord(final boolean horizontalMovement, final int increaseMov, final int movement) {
         if(horizontalMovement){
             setX(calculateNewValue(horizontalMovement, increaseMov, movement));
@@ -51,6 +58,12 @@ public class MobileEvent extends Event implements IMobileEvent {
         executeVerticalMovement(true, false);
     }
 
+    /**
+     * Can be extracted in another class
+     *
+     * @param increase
+     * @param horizontalMovement
+     */
     public void executeVerticalMovement(final boolean increase,final boolean horizontalMovement) {
         int movement = stepMovement;
         final int increaseMov = increase ? 1 : -1;
@@ -74,6 +87,8 @@ public class MobileEvent extends Event implements IMobileEvent {
     }
 
     /**
+     * Extract all event excepted main character
+     *
      * @param xPix
      * @param yPix
      * @return
@@ -142,6 +157,13 @@ public class MobileEvent extends Event implements IMobileEvent {
         return TILE_CHAR[getImgRepresentation()+REPR_VARIATION[representationVariationIndex]];
     }
 
+    /**
+     * TODO can be extracted in another helper class
+     *
+     * @param horizontalMovement
+     * @param newValue
+     * @return
+     */
     private boolean isInTheWall(final boolean horizontalMovement, final int newValue) {
         int xPix;
         int yPix;
