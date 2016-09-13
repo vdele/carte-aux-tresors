@@ -15,9 +15,9 @@ public class MapElement implements IMapElement {
 
     private int height = 32;
     private int width = 32;
-    private int X = 60;
-    private int Y = 110;
-    private int IMG_REPRESENTATION = 1;
+    private int x = 60;
+    private int y = 110;
+    private int imgRepresentation = 1;
 
     public BufferedImage[] TILE_CHAR = null;
 
@@ -34,7 +34,7 @@ public class MapElement implements IMapElement {
 
 
     public Integer getImgRepresentation(){
-        return IMG_REPRESENTATION;
+        return imgRepresentation;
     }
 
     public final BufferedImage[] getTileChar() {
@@ -42,8 +42,8 @@ public class MapElement implements IMapElement {
     }
 
     public BufferedImage getTileRepresentation(){
-        log.logTrace("Tile_Char[@]", IMG_REPRESENTATION);
-        return TILE_CHAR[IMG_REPRESENTATION];
+        log.logTrace("Tile_Char[@]", imgRepresentation);
+        return TILE_CHAR[imgRepresentation];
     }
 
     public final int getWidth() {
@@ -55,26 +55,26 @@ public class MapElement implements IMapElement {
      * @see entity.person.IEvent#maxX()
      */
     public final int maxX() {
-        return X + width;
+        return x + width;
     }
 
 
     public final int maxY() {
-        return Y + height;
+        return y + height;
     }
 
     /* (non-Javadoc)
      * @see entity.person.IEvent#minX()
      */
     public final int minX() {
-        return X;
+        return x;
     }
 
     /* (non-Javadoc)
      * @see entity.person.IEvent#minY()
      */
     public final int minY() {
-        return Y;
+        return y;
     }
 
 
@@ -83,7 +83,7 @@ public class MapElement implements IMapElement {
     }
 
     public void setImgRepresentation(final Integer imgRepresentation){
-        IMG_REPRESENTATION = imgRepresentation;
+        this.imgRepresentation = imgRepresentation;
     }
 
     public final void setTileChar(final BufferedImage[] tILE_CHAR) {
@@ -99,7 +99,7 @@ public class MapElement implements IMapElement {
      * @see entity.person.itf.IEvent#setX(int)
      */
     public final void setX(final int x) {
-        X = x;
+        this.x = x;
     }
 
     /*
@@ -107,7 +107,7 @@ public class MapElement implements IMapElement {
      * @see entity.person.itf.IEvent#setY(int)
      */
     public final void setY(final int y) {
-        Y = y;
+        this.y = y;
     }
 
 }

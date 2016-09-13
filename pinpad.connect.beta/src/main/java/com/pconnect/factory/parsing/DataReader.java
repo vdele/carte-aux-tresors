@@ -102,7 +102,7 @@ public abstract class DataReader
             //Close the buffer reader
             bufferReader.close();
         } catch (final IOException e) {
-            // Nothing todo, if the file doesn't exist, the method return null
+            // Nothing to do here, if the file doesn't exist, the method return null
         }
 
         return lines;

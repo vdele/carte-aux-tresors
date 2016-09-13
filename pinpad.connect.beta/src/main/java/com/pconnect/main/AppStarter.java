@@ -39,7 +39,6 @@ public class AppStarter
         //            dumb = new DumbParse();
         //            dumb.getDatasInFile();
         //        } catch (final Exception e) {
-        //            // TODO Auto-generated catch block
         //            e.printStackTrace();
         //        }
         final Person karl = new Person("Age","Karl",100);

@@ -17,10 +17,10 @@ import com.pconnect.entity.event.itf.IPerson;
 import com.pconnect.factory.gui.Board;
 import com.pconnect.factory.parsing.ConfigData;
 import com.pconnect.factory.parsing.MapData;
-import com.pconnect.factory.running.Config;
 import com.pconnect.factory.running.InstanceManager;
 import com.pconnect.factory.running.Logger;
 import com.pconnect.factory.running.Menu;
+import com.pconnect.factory.running.itf.IConfig;
 import com.pconnect.factory.running.itf.IInstanceManager;
 import com.pconnect.factory.util.Invoker;
 
@@ -47,12 +47,12 @@ public class AppLoader
 
     private Board board = null;;
 
-    private Config config = null;
+    private IConfig config = null;
 
     public AppLoader(){
         loadSupport();
         board = (Board) InstanceManager.getInstance(IInstanceManager.BOARD);
-        config = (Config) InstanceManager.getInstance(IInstanceManager.CONFIG);
+        config = (IConfig) InstanceManager.getInstance(IInstanceManager.CONFIG);
         // log need config to be usable
 
     }
@@ -86,10 +86,13 @@ public class AppLoader
     private void setupCharacter() throws IOException {
         final IPerson person = new Person("Dupont", "Gerard",100);
         person.setMainChar(true);
-        // TODO a parametrer
-        person.setHeight(Integer.parseInt(config.PARAMS.get(config.HEIGHT_CHAR)));
-        person.setWidth(Integer.parseInt(config.PARAMS.get(config.WIDTH_CHAR)));
-        final BufferedImage img = ImageIO.read(new File(config.TILE_CHAR_SET));
+        final Hashtable<String, String> applicationParameters = config.getApplicationParameters();
+
+        // TODO : parametrer
+        // TODO : Secure : Beware of nullPointerException
+        person.setHeight(Integer.parseInt(applicationParameters.get(IConfig.HEIGHT_CHAR)));
+        person.setWidth(Integer.parseInt(applicationParameters.get(IConfig.WIDTH_CHAR)));
+        final BufferedImage img = ImageIO.read(new File(config.getTileCharSet()));
         final BufferedImage[] tabCaseImg = new BufferedImage[12];
         for(int i = 0 ; i < 12;i++){
             final int y = i/3;
@@ -111,8 +114,8 @@ public class AppLoader
         final ConfigData cfgData = new ConfigData();
         config.defineLogLevel(cfgData.getConfigValue("logLevel"));
         //        tileCharFile=tiles/tilechars.png
-        config.TILE_CHAR_SET=cfgData.getConfigValue("tileCharFile");
-        config.PARAMS = cfgData.getAllParams();
+        config.setTileCharSet(cfgData.getConfigValue("tileCharFile"));
+        config.setApplicationParameters(cfgData.getAllParams());
         defineMenuPause(cfgData.getMenuPauseInformation());
         AppLoader.log.logInfo("Configuration has succesfully been set.");
 

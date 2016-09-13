@@ -24,7 +24,6 @@ public class NameData extends DataReader
 
     @Override
     public List<String> getDatasInFile() {
-        // TODO Auto-generated method stub
         return super.getDatasInFile();
     }
 

@@ -17,10 +17,10 @@ import javax.swing.Timer;
 
 import com.pconnect.entity.event.itf.IEvent;
 import com.pconnect.entity.event.itf.IPerson;
-import com.pconnect.factory.running.Config;
 import com.pconnect.factory.running.Engine;
 import com.pconnect.factory.running.InstanceManager;
 import com.pconnect.factory.running.Logger;
+import com.pconnect.factory.running.itf.IConfig;
 import com.pconnect.factory.running.itf.IInstanceManager;
 import com.pconnect.factory.running.itf.IItemMenu;
 
@@ -53,7 +53,7 @@ public class ThePanel extends JPanel implements ActionListener
     Timer timer=new Timer(60, this);
     private Board board = null;
 
-    private Config config = null;
+    private IConfig config = null;
     public ThePanel(){
         setBackground(Color.gray);
         new Engine().start();
@@ -61,7 +61,7 @@ public class ThePanel extends JPanel implements ActionListener
         setFocusable(true);
         addKeyListener(new PadListener());
         board = (Board)InstanceManager.getInstance(IInstanceManager.BOARD);
-        config = (Config)InstanceManager.getInstance(IInstanceManager.CONFIG);
+        config = (IConfig) InstanceManager.getInstance(IInstanceManager.CONFIG);
 
     }
 
@@ -124,7 +124,7 @@ public class ThePanel extends JPanel implements ActionListener
 
             log.logTrace("g.fillRect(@,@,@,@)", boxPosX,  boxPosY, boxWidth, boxHeight);
             g.fillRect(boxPosX,  boxPosY, boxWidth, boxHeight);
-            g.setFont( config.FONT_MENU_TITLE);
+            g.setFont(config.getFontMenuTitle());
             g.setColor(Color.black);
             g.drawString(board.MENU_PAUSE.getTitle(), boxPosX+10, boxPosY+20);
             int posYItem = boxPosY+40;
@@ -159,7 +159,7 @@ public class ThePanel extends JPanel implements ActionListener
             g2.setColor(Color.LIGHT_GRAY);
             g2.drawRect(boxPosX,  boxPosY, boxWidth, boxHeight);
 
-            g.setFont(config.FONT_MESSAGE);
+            g.setFont(config.getFontMessage());
             g.drawString(board.getMsgBoxText(), boxPosX+20, boxPosY+20);
         }
     }
