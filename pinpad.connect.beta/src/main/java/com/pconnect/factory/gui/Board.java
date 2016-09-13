@@ -3,7 +3,6 @@
  */
 package com.pconnect.factory.gui;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,6 @@ public class Board
     private boolean displayMessage = false;
     private String messageText = null;
 
-    public int CASE_SIZE = 32;
     public int SCREEN_WIDTH = 400;
 
     public int SCREEN_HEIGHT = 300;
@@ -36,18 +34,15 @@ public class Board
 
     public IMenu MENU_PAUSE= null;
 
-    private  List<IEvent> ALL_EVENTS= null;
+    private List<IEvent> events = null;
 
-    public  int[][] MAP = null;
-
-    public  BufferedImage[] IMG_CASE = null;
+    private Map map = null;
 
 
+    public boolean DISPLAY_EVENTS = false;
 
-    public  boolean DISPLAY_EVENTS = false;
 
-
-    private int indMainChar=-1;
+    private int indMainChar = -1;
 
     /**
      *
@@ -57,10 +52,10 @@ public class Board
     }
 
     public  void addEvent(final IEvent evt){
-        if(ALL_EVENTS == null) {
-            ALL_EVENTS = new ArrayList<IEvent>();
+        if(events == null) {
+            events = new ArrayList<IEvent>();
         }
-        ALL_EVENTS.add(evt);
+        events.add(evt);
     }
 
     public boolean areCharactersDisplayed() {
@@ -78,6 +73,7 @@ public class Board
     public void displayCharacter() {
         displayCharacter = !displayCharacter;
     }
+
     /**
      *
      */
@@ -88,8 +84,6 @@ public class Board
         }
     }
 
-
-
     public  boolean gameInPause(){
         return inPause;
     }
@@ -97,8 +91,9 @@ public class Board
     public  boolean gameIsStopped(){
         return gameInPause() || messageIsDisplayed();
     }
+
     public List<IEvent> getEvents(){
-        return ALL_EVENTS;
+        return events;
     }
     /**
      * RORO
@@ -107,8 +102,8 @@ public class Board
     public IPerson getMainChar(){
 
         if(indMainChar==-1){
-            for (int i = 0; i < ALL_EVENTS.size();i++){
-                final IEvent evt = ALL_EVENTS.get(i);
+            for (int i = 0; i < events.size();i++){
+                final IEvent evt = events.get(i);
                 if(evt instanceof IPerson) {
                     if(((IPerson)evt).isMainChar()) {
                         indMainChar = i;
@@ -118,35 +113,32 @@ public class Board
         }
 
         if(indMainChar !=-1 ){
-            return (IPerson)ALL_EVENTS.get(indMainChar);
+            return (IPerson)events.get(indMainChar);
         }
         return null;
 
     }
 
 
-    public  int getMapLengthInPixels(){
-        return MAP.length*CASE_SIZE;
-    }
 
-    public  int getMapWidthInPixels(){
-        return MAP[0].length*CASE_SIZE;
+    public Map getMap() {
+        return map;
     }
 
     public  String getMsgBoxText(){
         return messageText;
     }
 
-
     public boolean isBackgroundDisplayed(){
         return displayBackground;
     }
 
 
-
     public  boolean messageIsDisplayed(){
         return displayMessage;
     }
+
+
 
     /**
      *
@@ -159,6 +151,10 @@ public class Board
                 MENU_PAUSE.selectNext();
             }
         }
+    }
+
+    public void setMap(final int[][] map) {
+        this.map=new Map(map);
     }
 
     /**

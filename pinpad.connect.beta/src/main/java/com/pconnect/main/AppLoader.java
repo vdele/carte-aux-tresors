@@ -15,6 +15,7 @@ import com.pconnect.entity.event.Person;
 import com.pconnect.entity.event.itf.IEvent;
 import com.pconnect.entity.event.itf.IPerson;
 import com.pconnect.factory.gui.Board;
+import com.pconnect.factory.gui.Map;
 import com.pconnect.factory.parsing.ConfigData;
 import com.pconnect.factory.parsing.MapData;
 import com.pconnect.factory.running.InstanceManager;
@@ -129,15 +130,17 @@ public class AppLoader
      */
     private void setupEventsMap(final MapData mapData) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         final List<Hashtable<String, String>> events = mapData.getEvents();
+
+        final Map map = board.getMap();
         if(events!= null && events.size()>0){
             for(final Hashtable<String, String> evt : events){
                 final IEvent newEvt = (IEvent) Invoker.createInstance(evt.get("TypeEvent"));
-                newEvt.setHeight(board.CASE_SIZE);
-                newEvt.setWidth(board.CASE_SIZE);
+                newEvt.setHeight(map.CASE_SIZE);
+                newEvt.setWidth(map.CASE_SIZE);
                 final int x = Integer.parseInt(evt.get("CoordX"));
                 final int y = Integer.parseInt(evt.get("CoordY"));
-                newEvt.setX(board.CASE_SIZE*x);
-                newEvt.setY(board.CASE_SIZE*y);
+                newEvt.setX(map.CASE_SIZE * x);
+                newEvt.setY(map.CASE_SIZE * y);
                 board.addEvent(newEvt);
             }
         }
@@ -150,22 +153,24 @@ public class AppLoader
      */
     private void setupMap() throws Exception {
         final MapData mapData = new MapData();
-        board.MAP = mapData.getMap();
+        board.setMap(mapData.getMap());
+
+        final Map map = board.getMap();
         final BufferedImage img = ImageIO.read(new File(mapData.getNameOfTile()));
-        board.CASE_SIZE = mapData.getCaseSize();
-        final int nbcar = img.getHeight() * img.getWidth()/(board.CASE_SIZE*board.CASE_SIZE);
+        map.CASE_SIZE = mapData.getCaseSize();
+        final int nbcar = img.getHeight() * img.getWidth() / (map.CASE_SIZE * map.CASE_SIZE);
         final BufferedImage[] tabCaseImg = new BufferedImage[nbcar];
         for(int i = 0 ; i < tabCaseImg.length;i++){
             final int y = i/4;
 
             int x = i%4-1;
             x=x!=-1?x:3;
-            final BufferedImage subImg = img.getSubimage(x*board.CASE_SIZE, y*board.CASE_SIZE,board.CASE_SIZE, board.CASE_SIZE);
+            final BufferedImage subImg = img.getSubimage(x * map.CASE_SIZE, y * map.CASE_SIZE, map.CASE_SIZE, map.CASE_SIZE);
 
             tabCaseImg[i] = subImg;
         }
 
-        board.IMG_CASE = tabCaseImg;
+        map.IMG_CASE = tabCaseImg;
 
         setupEventsMap(mapData);
 

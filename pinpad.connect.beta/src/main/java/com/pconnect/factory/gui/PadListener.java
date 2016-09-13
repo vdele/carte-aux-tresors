@@ -6,7 +6,6 @@ package com.pconnect.factory.gui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import com.pconnect.factory.running.Config;
 import com.pconnect.factory.running.Engine;
 import com.pconnect.factory.running.InstanceManager;
 import com.pconnect.factory.running.itf.IInstanceManager;
@@ -31,17 +30,93 @@ public class PadListener implements KeyListener
     final int[] VALIDATION_KEYS = {VALIDATION_KEY1,VALIDATION_KEY2};
 
     private Board board = null;
-    private Config config = null;
-
 
     public PadListener(){
         super();
         board = (Board)InstanceManager.getInstance(IInstanceManager.BOARD);
-        config = (Config)InstanceManager.getInstance(IInstanceManager.CONFIG);
     }
 
-    public synchronized void keyReleased(final KeyEvent e) {
-        Engine.movement.remove(new Integer(e.getKeyCode())); 
+    /**
+     * @param keyCode
+     */
+    private void fKeyManagement(final int keyCode) {
+        if(isUsedFKey(keyCode)){
+            switch (keyCode) {
+            case NO_BACKGROUND:                
+                board.activeBackground();
+                break;            
+            case DISPLAY_CHAR:                
+                board.displayCharacter();
+                break;
+            case PAUSE:   
+                board.pause();
+
+                break;
+
+            case TEST_MSG_BOX:
+                if(!board.messageIsDisplayed()) {
+                    board.showMsgBox("Just a test");
+                } else {
+                    board.disableMsgBox();
+                }
+                break;
+
+            case F12:                
+                System.exit(0);
+                break;
+
+            default:
+                break;
+            }
+        }
+    }
+
+    private boolean isArrowKey(final int keyCode) {
+        switch (keyCode) {
+        case KeyEvent.VK_UP:
+            return true;
+
+        case KeyEvent.VK_DOWN:
+            return true;
+
+        case KeyEvent.VK_LEFT:
+            return true;
+
+        case KeyEvent.VK_RIGHT:
+            return true;
+
+        default:
+            return false;
+        }
+    }
+
+    /**
+     * @param keyCode
+     * @return
+     */
+    private boolean isUsedFKey(final int keyCode) {
+        for(final int touch : USED_TOUCH){
+            if(touch== keyCode) {
+                return true;
+            }
+        }
+        return false;
+        // return Arrays.asList(USED_TOUCH).contains(keyCode);   
+
+    }
+
+    /**
+     * If key typed is validationkey (enter, space)
+     * @param keyCode
+     * @return
+     */
+    private boolean isValidationKey(final int keyCode) {
+        for(final int touch : VALIDATION_KEYS){
+            if(touch== keyCode) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public synchronized void keyPressed(final KeyEvent e) {
@@ -91,87 +166,8 @@ public class PadListener implements KeyListener
 
     }
 
-    /**
-     * @param keyCode
-     */
-    private void fKeyManagement(final int keyCode) {
-        if(isUsedFKey(keyCode)){
-            switch (keyCode) {
-            case NO_BACKGROUND:                
-                board.activeBackground();
-                break;            
-            case DISPLAY_CHAR:                
-                board.displayCharacter();
-                break;
-            case PAUSE:   
-                board.pause();
-
-                break;
-
-            case TEST_MSG_BOX:
-                if(!board.messageIsDisplayed()) {
-                    board.showMsgBox("Just a test");
-                } else {
-                    board.disableMsgBox();
-                }
-                break;
-
-            case F12:                
-                System.exit(0);
-                break;
-
-            default:
-                break;
-            }
-        }
-    }
-
-    /**
-     * If key typed is validationkey (enter, space)
-     * @param keyCode
-     * @return
-     */
-    private boolean isValidationKey(final int keyCode) {
-        for(final int touch : VALIDATION_KEYS){
-            if(touch== keyCode) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @param keyCode
-     * @return
-     */
-    private boolean isUsedFKey(final int keyCode) {
-        for(final int touch : USED_TOUCH){
-            if(touch== keyCode) {
-                return true;
-            }
-        }
-        return false;
-        // return Arrays.asList(USED_TOUCH).contains(keyCode);   
-
-    }
-
-    private boolean isArrowKey(final int keyCode) {
-        switch (keyCode) {
-        case KeyEvent.VK_UP:
-            return true;
-
-        case KeyEvent.VK_DOWN:
-            return true;
-
-        case KeyEvent.VK_LEFT:
-            return true;
-
-        case KeyEvent.VK_RIGHT:
-            return true;
-
-        default:
-            return false;
-        }
+    public synchronized void keyReleased(final KeyEvent e) {
+        Engine.movement.remove(new Integer(e.getKeyCode())); 
     }
 
     public synchronized void keyTyped(final KeyEvent e) {

@@ -30,7 +30,7 @@ import com.pconnect.factory.running.itf.IItemMenu;
  * @date 24 juin 2015
  *
  */
-public class ThePanel extends JPanel implements ActionListener
+public class Displayer extends JPanel implements ActionListener
 {
     class DisplayingDimension{
         int boundX,boundY,width,height;
@@ -54,7 +54,7 @@ public class ThePanel extends JPanel implements ActionListener
     private Board board = null;
 
     private IConfig config = null;
-    public ThePanel(){
+    public Displayer(){
         setBackground(Color.gray);
         new Engine().start();
         timer.start();
@@ -76,14 +76,18 @@ public class ThePanel extends JPanel implements ActionListener
      */
     private void drawBackground(final Graphics g, final DisplayingDimension dim) {
         setBounds(dim.boundX, dim.boundY,dim.width,dim.height);
-        if (board.isBackgroundDisplayed() && board.MAP != null) {
-            for(int col = 0; col < board.MAP.length; col++) {
-                for(int lig = 0; lig < board.MAP[col].length;lig++){
-                    g.drawImage(board.IMG_CASE[board.MAP[col][lig]], lig*board.CASE_SIZE, col*board.CASE_SIZE, board.CASE_SIZE, board.CASE_SIZE,null);
+
+        final Map map = board.getMap();
+        if (board.isBackgroundDisplayed() && map != null) {
+            for (int col = 0; col < map.getHeight(); col++) {
+                for (int lig = 0; lig < map.getWidth(); lig++) {
+                    g.drawImage(map.getImageRepresentation(col, lig), lig * map.CASE_SIZE, col * map.CASE_SIZE, map.CASE_SIZE, map.CASE_SIZE, null);
                 }
             }
         }
     }
+
+
     /**
      * @param g
      */
@@ -173,17 +177,19 @@ public class ThePanel extends JPanel implements ActionListener
         boundY = boundY>0?0:boundY;
         boundX = boundX>0?0:boundX;
 
+        final Map map = board.getMap();
+
         int width = -boundX + board.SCREEN_WIDTH;
         int height = -boundY + board.SCREEN_HEIGHT;
-        if(width>board.getMapWidthInPixels()+5){
-            boundX=board.SCREEN_WIDTH-board.getMapWidthInPixels()-5;
-            width = board.getMapWidthInPixels()+5;
+        if (width > map.getMapWidthInPixels() + 5) {
+            boundX = board.SCREEN_WIDTH - map.getMapWidthInPixels() - 5;
+            width = map.getMapWidthInPixels() + 5;
         }
 
         // 28 to adjust with header of program window
-        if(height>board.getMapLengthInPixels()+28){
-            boundY=board.SCREEN_HEIGHT-board.getMapLengthInPixels()-28;
-            height = board.getMapLengthInPixels()+28;
+        if (height > map.getMapLengthInPixels() + 28) {
+            boundY = board.SCREEN_HEIGHT - map.getMapLengthInPixels() - 28;
+            height = map.getMapLengthInPixels() + 28;
         }
 
         final DisplayingDimension dim = new DisplayingDimension(boundX,boundY,width,height+30);

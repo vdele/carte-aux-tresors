@@ -9,6 +9,7 @@ import com.pconnect.entity.event.itf.IEvent;
 import com.pconnect.entity.event.itf.IMobileEvent;
 import com.pconnect.entity.event.itf.IPerson;
 import com.pconnect.factory.gui.Coord;
+import com.pconnect.factory.gui.Map;
 
 public abstract class MobileEvent extends Event implements IMobileEvent {
 
@@ -175,8 +176,8 @@ public abstract class MobileEvent extends Event implements IMobileEvent {
             xPix = minX();
             yPix = newValue;
         }
-
-        if (yPix + getHeight() >= board.getMapLengthInPixels() || xPix + getWidth() >= board.getMapWidthInPixels() || xPix < 0 || yPix < 0) {
+        final Map map = board.getMap();
+        if (yPix + getHeight() >= map.getMapLengthInPixels() || xPix + getWidth() >= map.getMapWidthInPixels() || xPix < 0 || yPix < 0) {
             return true;
         } else if (getEvent(xPix, yPix) != null) {
             return true;
