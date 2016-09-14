@@ -1,8 +1,9 @@
 /**
  *
  */
-package com.pconnect.entity.event;
+package com.pconnect.entity.event.bo;
 
+import com.pconnect.entity.event.MobileEvent;
 import com.pconnect.entity.event.itf.IPerson;
 import com.pconnect.factory.util.FactoryUtils;
 

@@ -27,11 +27,11 @@ case.size=32
 	[EVENT]
 		CoordX=5
 		CoordY=3
-		TypeEvent=com.pconnect.entity.event.impl.Caisse
+		TypeEvent=com.pconnect.entity.event.bo.Caisse
 	[/EVENT]
 	[EVENT]
 		CoordX=7
 		CoordY=5
-		TypeEvent=com.pconnect.entity.event.impl.Coffre
+		TypeEvent=com.pconnect.entity.event.bo.Coffre
 	[/EVENT]
 [/EVENTS]

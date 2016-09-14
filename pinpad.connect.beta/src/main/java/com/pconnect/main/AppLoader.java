@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import com.pconnect.entity.event.Person;
+import com.pconnect.entity.event.bo.Person;
 import com.pconnect.entity.event.itf.IEvent;
 import com.pconnect.entity.event.itf.IPerson;
 import com.pconnect.factory.gui.Board;
@@ -43,6 +43,8 @@ public class AppLoader
 
         AppLoader.log.logInfo("Config class has been instanciated");
         InstanceManager.addInstance("Board", "com.pconnect.factory.gui.Board");
+        AppLoader.log.logInfo("Board class has been instanciated");
+        InstanceManager.addInstance("EventHelper", "com.pconnect.entity.event.EventHelper");
         AppLoader.log.logInfo("Board class has been instanciated");
     }
 

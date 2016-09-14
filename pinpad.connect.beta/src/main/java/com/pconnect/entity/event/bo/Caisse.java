@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.pconnect.entity.event.impl;
+package com.pconnect.entity.event.bo;
 
 import com.pconnect.entity.event.Event;
 

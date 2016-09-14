@@ -1,6 +1,6 @@
 package com.pconnect.main;
 
-import com.pconnect.entity.event.Person;
+import com.pconnect.entity.event.bo.Person;
 import com.pconnect.factory.running.Ring;
 
 
@@ -8,7 +8,7 @@ import com.pconnect.factory.running.Ring;
  * Hello world!
  *
  */
-public class AppStarter 
+public class AppStarter
 
 {        // App.p.getContentPane().setLayout(null);
 
@@ -18,7 +18,7 @@ public class AppStarter
     public static void main( final String[] args ) throws Exception
     {
 
-        //************* first thing todo ******************//
+        // ************* first thing to do ******************//
         final AppLoader appLoader = new AppLoader();
         appLoader.start();
         //*************************************************//

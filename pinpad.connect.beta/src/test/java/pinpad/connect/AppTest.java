@@ -3,7 +3,7 @@ package pinpad.connect;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import com.pconnect.entity.event.Person;
+import com.pconnect.entity.event.bo.Person;
 import com.pconnect.entity.event.itf.IPerson;
 import com.pconnect.factory.parsing.NameData;
 import com.pconnect.factory.running.Logger;
@@ -105,7 +105,7 @@ extends TestCase
             final NameData name = new NameData();
             assertEquals("name.data", name.getFileName());
         } catch (final Exception e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
     }

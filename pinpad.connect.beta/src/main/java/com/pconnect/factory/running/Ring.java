@@ -3,7 +3,7 @@
  */
 package com.pconnect.factory.running;
 
-import com.pconnect.entity.event.Person;
+import com.pconnect.entity.event.bo.Person;
 import com.pconnect.entity.event.itf.IPerson;
 
 

@@ -13,7 +13,7 @@ import com.pconnect.factory.running.Logger;
  */
 public abstract class Event extends MapElement implements IEvent {
 
-    Logger log = new Logger(this.getClass());
+    protected Logger log = new Logger(this.getClass());
 
     private boolean hasBeenConsumed = false;
 

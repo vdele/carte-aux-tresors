@@ -4,7 +4,7 @@
 
 package com.pconnect.entity.event.itf;
 
-import com.pconnect.entity.event.Person;
+import com.pconnect.entity.event.bo.Person;
 
 /**
  * @author 20002845
